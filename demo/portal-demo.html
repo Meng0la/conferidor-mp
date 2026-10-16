@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Portal Demo — Busca</title>
+<style>
+ body{font-family:system-ui,sans-serif;max-width:900px;margin:24px auto;padding:0 16px;color:#222}
+ table{border-collapse:collapse;width:100%;margin-top:16px} td,th{border:1px solid #ccc;padding:6px 8px;text-align:left}
+ input{padding:6px;width:260px} button{padding:4px 10px;cursor:pointer} .det{white-space:pre-line;border:1px solid #ccc;padding:16px}
+</style></head>
+<body><h2>Portal de demonstração</h2><main id="app"></main>
+<script>
+// Portal falso para testar o conferidor sem acesso a nenhum sistema real.
+// Rotas: #/busca  e  #/detalhe/<pedido>/<linha>
+const DB = {
+  "100000101/10": "PLACA ALUMINIO 7075-T651 1,250 POL",
+  "100000102/10": "PLACA ALUMINIO 7075-T651 TIPO II 1,",   // descrição cortada
+  "100000103/20": "PLACA ALUMINIO 6061-T6 1 1/2 POL",      // 1,500 POL
+  "100000104/10": "BARRA NYLON 6.6 20MM",                  // sem polegada
+  "100000105/10": "",                                      // sem descrição
+  "100000106/30": "PLACA ACO INOX 304 2,000 POL"
+};
+const app = document.getElementById("app");
+function render() {
+  const h = location.hash || "#/busca";
+  if (!h.startsWith("#/detalhe")) {
+    app.innerHTML = `<label>Pedido/Linha<br><input id="campo-busca" placeholder="100000101/00010"></label>
+      <table id="resultados"><thead><tr><th>Pedido</th><th>Linha</th><th>Descrição</th><th>Ver</th></tr></thead><tbody></tbody></table>
+      <button data-acao="voltar" style="display:none">Voltar</button>`;
+    document.getElementById("campo-busca").addEventListener("keyup", e => {
+      if (e.keyCode !== 13) return;
+      const [p, l] = e.target.value.split("/"); const ln = String(parseInt(l || "0", 10));
+      setTimeout(() => {   // simula a latência do servidor
+        const tb = document.querySelector("#resultados tbody");
+        tb.innerHTML = (p + "/" + ln) in DB
+          ? `<tr><td>${p}</td><td>${ln}</td><td>PECA</td><td><button data-acao="detalhe" onclick="location.hash='#/detalhe/${p}/${ln}'">🔍</button></td></tr>` : "";
+      }, 300);
+    });
+  } else {
+    const [, , p, ln] = h.split("/");
+    app.innerHTML = "carregando...";
+    setTimeout(() => {
+      app.innerHTML = `<div class="det">PEDIDO ${p}\nLINHA ${ln}\nDESCRIÇÃO DA MATÉRIA-PRIMA\n${DB[p + "/" + ln] ?? ""}\nLOTE\n—</div>
+        <p><button data-acao="voltar" onclick="location.hash='#/busca'">Voltar</button></p>`;
+    }, 400);
+  }
+}
+window.onhashchange = render; render();
+</script></body></html>

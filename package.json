@@ -1,0 +1,17 @@
+{
+  "name": "conferidor-mp",
+  "version": "1.0.0",
+  "description": "Confere a matéria-prima (polegada) de uma planilha Excel contra um portal web, usando a aba logada do Chrome/Edge via CDP. Compila em um .exe único.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "start": "bun src/conferidor.js",
+    "demo:portal": "bun demo/servidor.js",
+    "test": "bun test",
+    "build:win": "bun build src/conferidor.js --compile --minify --target=bun-windows-x64-baseline --outfile dist/ConferidorMP.exe",
+    "build:linux": "bun build src/conferidor.js --compile --minify --outfile dist/conferidor-mp"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0"
+  }
+}

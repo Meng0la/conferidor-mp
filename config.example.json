@@ -1,0 +1,31 @@
+{
+  "_comentario": "Copie para config.json (ao lado do .exe) e ajuste para o seu portal. Use F12 > Inspecionar no navegador para achar os seletores.",
+  "portal": {
+    "url": "https://portal.exemplo.com/app/#/busca",
+    "urlContem": "portal.exemplo.com/app",
+    "rotaBusca": "#/busca",
+    "nomeTelaBusca": "Busca",
+    "porta": 9222,
+    "pastaPerfil": "NavegadorConferidor",
+    "seletorCampoBusca": "#campo-busca",
+    "seletorBotaoVoltar": "[data-acao='voltar']",
+    "seletorBotaoDetalhe": "[data-acao='detalhe']",
+    "seletorLinhasResultado": "#resultados tbody tr",
+    "seletorAreaDetalhe": "main",
+    "colunaResultadoPedido": 0,
+    "colunaResultadoLinha": 1,
+    "regexCabecalhoDetalhe": "PEDIDO\\s*(\\d+)\\s*LINHA\\s*(\\d+)",
+    "textoInicioDescricao": "DESCRIÇÃO DA MATÉRIA-PRIMA",
+    "textoFimDescricao": "LOTE"
+  },
+  "planilha": {
+    "abaPreferida": "",
+    "cabecalhoPedidoLinha": "PEDIDO ?\\/ ?LINHA|OC ?\\/ ?LINHA|PO ?\\/ ?LINHA",
+    "cabecalhoResultado": ["^RESULTADO"],
+    "cabecalhoMaterial": ["MATERIA ?-?PRIMA", "^MP\\b", "MATERIAL"],
+    "nomeColunaResultado": "RESULTADO MP",
+    "nomeColunaPortal": "MP portal",
+    "nomeColunaObs": "Obs MP",
+    "salvarACada": 20
+  }
+}
